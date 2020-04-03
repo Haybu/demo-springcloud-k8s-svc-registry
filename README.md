@@ -4,11 +4,13 @@ Provided that you have a kubernetes cluster and have installed
 the [Eureka lite Kubernetes Proxy](https://github.com/Haybu/spring-cloud-k8s-eureka-controller)
 
 The demo has two services, backend-service and frontend-service.
-The backend-service is installed as a kubernetes internal service,
-and the front-service is installed as an exposed kubernetes service.
-The backend-service is enabled (in the manifest) to register with Eureka,
+
+The backend-service is to be deployed as a kubernetes internal service,
+and the front-service is to be deployed as an exposed kubernetes service.
+
+The backend-service is enabled (in the manifest) to register with the deployed Eureka server,
 and the frontend-service uses a client-side loadbalancer to call 
-a backend-service instances discovered from the Eureka server.
+a backend-service instance discovered from the Eureka server.
 
 ```bash
 ## deploy the backend service
