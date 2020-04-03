@@ -1,0 +1,44 @@
+server:
+  port: 8092
+
+spring:
+  application:
+    name: frontend-service
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+dekorate:
+  docker:
+    registry: haybu
+  kubernetes:
+    name: frontend-service
+    expose: true
+    image-pull-policy: IfNotPresent
+    liveness-probe:
+      http-action-path: /actuator/health
+    readiness-probe:
+      http-action-path: /actuator/health
+      period-seconds: 4
+
+eureka:
+  client:
+    registerWithEureka: false
+
+---
+spring:
+  profiles: kubernetes
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_SERVICE_URL_DEFAULT_ZONE}
+  instance:
+    hostname: ${EUREKA_SERVER_SERVICE_HOST:localhost}

@@ -1,0 +1,25 @@
+server:
+  port: 8091
+
+spring:
+  application:
+    name: backend-service
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+dekorate:
+  docker:
+    registry: haybu
+  kubernetes:
+    name: backend-service
+    expose: false
+    image-pull-policy: IfNotPresent
+    liveness-probe:
+      http-action-path: /actuator/health
+    readiness-probe:
+      http-action-path: /actuator/health
+      period-seconds: 4
